@@ -1,16 +1,158 @@
 <!DOCTYPE HTML>
 <html>
+
 <head>
-    
+    <meta charset="utf-8" />
+    <title>FoodSource</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> 
+
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@700&display=swap" rel="stylesheet">
 </head>
+<style>
+    h1,
+    label, 
+    h2,
+    a {
+        font-family: 'Raleway', sans-serif;
+        text-align: center;
+    }
+
+    p {
+        font-family: 'Raleway', sans-serif;
+    }
+
+    a,
+    a:visited {
+        color: blue;
+    }
+
+    .center {
+        margin: auto;
+        width: 50%;
+        padding: 10px;
+    }
+
+    body {
+        background-color: #91b6ff;
+        background-repeat: no-repeat, repeat;
+        background-size: cover;
+    }
+
+    input[type=text],
+    select,
+    textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin-top: 6px;
+        margin-bottom: 16px;
+        resize: vertical;
+    }
+
+    input[type=submit] {
+        background-color: #43c7ff;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    input[type=submit]:hover {
+        background-color: #327e9a;
+    }
+
+    .container {
+        border-radius: 5px;
+        background-color: #f2f2f2;
+        padding: 20px;
+        float: center;
+    }
+    #partitioned {
+        background-color: transparent;
+        padding-left: 10px;
+        letter-spacing: 42px;
+        border: 0;
+        background-image: linear-gradient(to left, black 70%, rgba(255, 255, 255, 0) 0%);
+        background-position: bottom;
+        background-size: 50px 1px;
+        background-repeat: repeat-x;
+        background-position-x: 35px;
+        width: 230px;
+        min-width: 220px;
+        }
+
+        #divInner{
+        left: 0;
+        position: sticky;
+        }
+
+        #divOuter{
+        width: 195px; 
+        overflow: hidden;
+        }
+
+</style>
 
 <body>
     <a href="/"> &#60; Home </a>
-    <h1> For Business </h1>
+    <h1>Embed VaxPass Auth</h1>
+    <div class="center">
+        <div class="container">
+            <p> VaxPass Auth </p>
+            <div id="divOuter">
+                <div id="divInner">
+                    <input id="partitioned" type="text" maxlength="4" />
+                </div>
+            </div>
+            <button onclick="check()" class="w3-button w3-green"> Confirm </button>
+            <div id="my-text-box">
+            </div>
+
+        </div>
+        <h2> Get Code </h2>
+    <iframe src="https://www.thiscodeworks.com/embed/60850865e1fe4b001454be5a" style="width: 100%; height: 502px;" frameborder="0"></iframe>
+    </div>
     
 
     
     
 
 </body>
+
+<script>
+    
+    function check() {
+        
+    
+        var x = document.getElementById("partitioned").value;
+        console.log(x);
+        if (x == "1234") {
+            document.getElementById('my-text-box').innerHTML = "<p style='color:green'> Success! <p>";
+        }
+        else {
+            document.getElementById('my-text-box').innerHTML = "<p style='color:red'> Oops, try again. </p>";
+        }
+        /*
+        var db = JSON.parse("db/db.json");
+        var success = false;
+        for (i = 0; i < db.length; i ++) {
+            if (x == db[i]) {
+                success = success || true;
+            }
+        }
+        if (success == true) {
+            document.getElementById('my-text-box').innerHTML = "<p style='color:green'> Success! <p>";
+        } else {
+            document.getElementById('my-text-box').innerHTML = "<p style='color:red'> Oops, try again. </p>";
+        }
+        */
+    }
+    
+</script>
+
 </html>
