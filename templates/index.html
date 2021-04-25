@@ -1,3 +1,185 @@
 <html>
-    
+<head>
+    <!-- <title>FoodSource</title> -->
+    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-core.js"type="text/javascript" charset="utf-8"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-service.js"type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@700&display=swap" rel="stylesheet">
+<style>
+  h1 {
+    font-family: 'Raleway', sans-serif;
+    text-align: center;
+  }
+  body {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    background-image: url('https://www.thenation.com/wp-content/uploads/2020/04/unhoused-person-nyc-img.jpg');
+}
+
+li {
+    list-style: none; 
+    border: 1px solid white;
+    border-radius: 3px;
+    background-color: lightgreen;
+    color: black;
+    padding: 6px;
+};
+
+ul {
+    list-style: none;
+};
+
+
+</style>
+
+</head>
+
+<body>
+
+<h1>FoodSource</h1>
+<div><a href="/order" class="w3-button w3-indigo"> Make an order here! </a></div>
+<br>
+
+<div class="flex-container">
+    <div id="mapFrame" height="600" width="600">
+        <iframe src="https://data.democratandchronicle.com/covid-19-vaccine-tracker/california/06/" style="height:600; width:600;"></iframe>
+    </div>
+
+    <div id="buttonDiv">
+        <button id="vaccBtn">I Got Vaccinated!</button>
+        <button id="businessButton">Use for Business</button>
+    </div>
+</div>
+
+<script>
+
+var platform = new H.service.Platform({
+    'apikey': '2p6mv-fIC0HKioTYd4Fb0NotXpGuOiwu1NtawHZNxno'
+});
+
+// array of coordinates to mark on our map.
+// whenever a new user requests food, we add their coordinates to this array
+// to display on the map.
+var coordinates = [];
+coordinates.push([37.314170, -121.773780]);
+
+// center of the map. these are the coordinates for Evergreen, San Jose.
+const latitude = 37.314170;
+const longitude = -121.773780;
+
+var maptypes = platform.createDefaultLayers();
+
+var map = new H.Map(
+    document.getElementById('mapContainer'),
+    maptypes.vector.normal.map,
+    {
+        zoom: 13,
+        center: { lat: latitude, lng: longitude }
+    }
+);
+
+function addDomMarker(map, latitude, longitude, num) {
+  var outerElement = document.createElement('div'),
+      innerElement = document.createElement('div');
+
+  outerElement.style.userSelect = 'none';
+  outerElement.style.webkitUserSelect = 'none';
+  outerElement.style.msUserSelect = 'none';
+  outerElement.style.mozUserSelect = 'none';
+  outerElement.style.cursor = 'default';
+
+  innerElement.style.font = 'normal 12px arial';
+  innerElement.style.lineHeight = '12px'
+
+  innerElement.style.paddingTop = '2px';
+  innerElement.style.paddingLeft = '4px';
+  innerElement.style.width = '20px';
+  innerElement.style.height = '20px';
+
+  innerElement.style.marginTop = '-10px';
+  innerElement.style.marginLeft = '-10px';
+  innerElement.innerHTML = '<img src="https://www.moha-swiss.com/wp-content/uploads/2014/09/Map-Marker-Marker-Outside-Chartreuse-icon.png" height="30" width="30" />';
+
+  outerElement.appendChild(innerElement);
+
+  function changeColor(evt) {
+    console.log("color changed.");
+    li = document.getElementById("request"+num);
+    li.style.backgroundColor = "yellow";
+  };
+
+  function resetColor(evt) {
+    console.log("color reset.");
+    li = document.getElementById("request"+num);
+    li.style.backgroundColor = "lightgreen";
+  };
+  function redirectToHelpPage(evt) {
+    console.log("redirected to help page.");
+    window.open("http://localhost:5000/help/"+num, "_blank");
+  };
+
+  var domIcon = new H.map.DomIcon(outerElement, {
+    onAttach: function(clonedElement, domIcon, domMarker) {
+      clonedElement.addEventListener('mouseover', changeColor);
+      clonedElement.addEventListener('mouseout', resetColor);
+      clonedElement.addEventListener('click', redirectToHelpPage);
+    },
+    onDetach: function(clonedElement, domIcon, domMarker) {
+      clonedElement.removeEventListener('mouseover', changeColor);
+      clonedElement.removeEventListener('mouseout', resetColor);
+      clonedElement.removeEventListener('click', redirectToHelpPage);
+    }
+  });
+
+  var marker = new H.map.DomMarker({lat: latitude, lng: longitude}, {
+    icon: domIcon
+  });
+  map.addObject(marker);
+}
+
+// retrieve current JSON array of food request objects
+// format: { coordinates : [latitude, longitude], name : <name>, income : <income>, address : <address>, food : <food> }
+var json_data = [];
+
+fetch("http://localhost:5000/getdata").then(function(response) {
+    response.text().then(function(text) {
+        json_data = JSON.parse(text);
+
+        // add all coordinates in the array to the map as markers.
+        json_data.forEach(function(obj) {
+            // add a new marker to the map for each new set of coordinates
+            const div = document.createElement('div');
+            div.innerHTML = 'abc';
+            icon = new H.map.DomIcon(div);
+            var marker = new H.map.Marker({ lat: obj.coordinates[0], lng: obj.coordinates[1] });
+            
+            // update the list of requests on the right-hand side of the page
+            var ul = document.getElementById("foodRequests");
+            var li = document.createElement("li");
+            var children = ul.children.length + 1
+            li.setAttribute("id", "request"+children)
+            request_string = obj.name + "<br>" + obj.income + "<br>" + obj.address + "<br>" + obj.food + "<br><b><a href='/help/"+obj.id+"'>Help</a></b>";
+            console.log(request_string);
+            // li.appendChild(document.createTextNode(request_string));
+            li.innerHTML = request_string;
+            ul.appendChild(li);
+            
+            // make it so that hovering over the marker creates a popup bubble
+            // and lights up the corresponding info box
+            addDomMarker(map, obj.coordinates[0], obj.coordinates[1], children);
+        });
+    });
+});
+
+</script>
+
+
+</body>
 </html>
