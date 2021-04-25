@@ -1,11 +1,112 @@
+<!DOCTYPE HTML>
 <html>
+
 <head>
-    
+    <meta charset="utf-8" />
+    <title>FoodSource</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@700&display=swap" rel="stylesheet">
 </head>
+<style>
+    h1,
+    label,
+    a {
+        font-family: 'Raleway', sans-serif;
+        text-align: center;
+    }
+
+    p {
+        font-family: 'Raleway', sans-serif;
+    }
+
+    a,
+    a:visited {
+        color: blue;
+    }
+
+    .center {
+        margin: auto;
+        width: 50%;
+        padding: 10px;
+    }
+
+    body {
+        background-color: #91b6ff;
+        background-repeat: no-repeat, repeat;
+        background-size: cover;
+    }
+
+    input[type=text],
+    select,
+    textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin-top: 6px;
+        margin-bottom: 16px;
+        resize: vertical;
+    }
+
+    input[type=submit] {
+        background-color: #43c7ff;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    input[type=submit]:hover {
+        background-color: #327e9a;
+    }
+
+    .container {
+        border-radius: 5px;
+        background-color: #f2f2f2;
+        padding: 20px;
+        float: center;
+    }
+</style>
 
 <body>
+    <a href="/"> &#60; Home </a>
+    <h1>Add Vaccination Card</h1>
+    <div class="center">
+        <div class="container">
+            <form action="{{ url_for('add') }}" method="POST" enctype="multipart/form-data">
+                <label for="fname">Full Name</label>
+                <input type="text" id="fname" name="fname" placeholder="Full name..">
 
-<h1>Add Vaccination Card</h1>
+
+
+
+
+                <label for="address">Full Address</label>
+                <input type="text" id="address" name="address" placeholder="4321 Hacker Road, Hacking City, HA 12345">
+                <label for="file">Upload a photo of the card</label>
+                <input type="file" id="file" name="file"> <br>
+                <br>
+                <p style="color: blue">For Verification</p>
+                <label for="cars">Choose healthcare provider:</label>
+                <select name="cars" id="cars">
+                    <option value="walg">Walgreens Pharmacy</option>
+                    <option value="cvs">CVS Pharmacy</option>
+                    <option value="kais">Kaiser Permanente</option>
+                    <option value="safe">Safeway Pharmacy</option>
+                    <option value="sun">Sun Pharmacy</option>
+                    <option value="walm">Walmart Pharmacy</option>
+                    <option value="cos">Costco Pharmacy</option>
+
+                </select>
+
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
 
 </body>
+
 </html>
