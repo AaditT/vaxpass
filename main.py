@@ -27,6 +27,7 @@ def add():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             return redirect(url_for('add',
                                     filename=filename))
+        
     return render_template("add.html")
 
 @app.route('/business')
