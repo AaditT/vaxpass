@@ -20,7 +20,7 @@
 .flex-container {
     display: flex;
     flex-direction: row;
-    background-image: url('https://www.thenation.com/wp-content/uploads/2020/04/unhoused-person-nyc-img.jpg');
+    /*background-image: url('https://www.thenation.com/wp-content/uploads/2020/04/unhoused-person-nyc-img.jpg');*/
 }
 
 li {
@@ -44,7 +44,7 @@ ul {
 <body>
 
 <h1>VaxPass</h1>
-<div><a href="/order" class="w3-button w3-indigo"> Make an order here! </a></div>
+<div><a href="/order" class="w3-button w3-blue"> Make an order here! </a></div>
 <br>
 
 <div class="flex-container">
@@ -52,9 +52,10 @@ ul {
         <iframe src="https://data.democratandchronicle.com/covid-19-vaccine-tracker/california/06/" style="height:600; width:600;"></iframe>
     </div>
 
-    <div id="buttonDiv">
-        <button id="vaccBtn">I Got Vaccinated!</button>
-        <button id="businessButton">Use for Business</button>
+    <div id="buttonDiv" style="padding-left: 25px">
+      <a class="w3-button w3-blue" href="{{url_for('add')}}">I Got Vaccinated!</a> <br><br>
+      <a class="w3-button w3-blue" href="{{url_for('business')}}">Use for Business</a> 
+        
     </div>
 </div>
 
