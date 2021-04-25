@@ -44,7 +44,6 @@ ul {
 <body>
 
 <h1>VaxPass</h1>
-<div><a href="/order" class="w3-button w3-blue"> Make an order here! </a></div>
 <br>
 
 <div class="flex-container">
@@ -53,6 +52,7 @@ ul {
     </div>
 
     <div id="buttonDiv" style="padding-left: 25px">
+      <label id="codelabel" style="color: red; font-weight: bold;"> {{ vax_code }} </label><br><br>
       <a class="w3-button w3-blue" href="{{url_for('add')}}">I Got Vaccinated!</a> <br><br>
       <a class="w3-button w3-blue" href="{{url_for('business')}}">Use for Business</a> 
         

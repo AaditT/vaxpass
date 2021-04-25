@@ -10,13 +10,17 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.secret_key = 'key'
 app.config['SESSION_TYPE'] = 'filesystem'
 
+vaxcode = ""
+
 
 @app.route('/')
 def home():
-    return render_template("index.html")
+    return render_template("index.html", vax_code=vaxcode)
 
 @app.route('/add', methods=["POST", "GET"])
 def add():
+    global vaxcode
+    vaxcode = "Your code is: 5862"
     if request.method == "POST":
         file = request.files['file']
         if file.filename == '':
