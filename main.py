@@ -29,6 +29,10 @@ def add():
                                     filename=filename))
     return render_template("add.html")
 
+@app.route('/business')
+def business():
+    return render_template("business.html")
+
 if __name__ == '__main__':
     
     app.run(debug=True)
